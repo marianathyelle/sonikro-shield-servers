@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "./routes";
+import { Header } from "./components/Header";
 
 class App extends Component {
   render() {
     return (
-      <h1>Hello World!</h1>    
+      <BrowserRouter>
+        <Header />
+        <Routes />
+      </BrowserRouter>
     );
   }
 }

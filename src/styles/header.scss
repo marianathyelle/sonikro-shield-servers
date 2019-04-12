@@ -1,0 +1,28 @@
+
+.header {
+  background-color: #375686;
+  padding: 10px;
+  padding-right: 20px;
+
+  @media (max-width: 350px) {
+    flex-direction: column !important;
+  }
+
+  a {
+    color: white;
+    &:hover,
+    &:active,
+    &:focus {
+      color: #ededed;
+    }
+  }
+}
+
+.logo {
+  height: 60px;
+}
+
+.steam-btn {
+  background-color: #5C7E10 !important;
+  color: white !important;
+}
