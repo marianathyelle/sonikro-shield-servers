@@ -27,14 +27,15 @@ export interface User {
 
 export class Login {
   @observable userData?: User;
+  @observable token: string = "";
 
   public getToken() {
     let urlParams: TokenParam;
 
-    const token = store.get('token')
+    this.token = store.get('token')
 
-    if(token) {
-      this.userData = jwt.decode(token) as User;
+    if(this.token) {
+      this.userData = jwt.decode(this.token) as User;
     }
 
     if(window.location.search.length !== 0) {

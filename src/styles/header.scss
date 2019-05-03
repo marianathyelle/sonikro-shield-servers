@@ -3,6 +3,7 @@
   background-color: #375686;
   padding: 10px;
   padding-right: 20px;
+  margin-bottom: 30px;
 
   @media (max-width: 350px) {
     flex-direction: column !important;
@@ -20,6 +21,12 @@
 
 .logo {
   height: 60px;
+}
+
+.title {
+  color: white;
+  margin-left: 10px;
+  font-size: 22px;
 }
 
 .login-btn {

@@ -5,22 +5,31 @@ import { UserProfile } from "./UserProfile";
 import { API_URL } from "../services";
 import { observer } from "mobx-react";
 import { Login } from "../stores/Login";
+import { ModalComponent } from "../components/ModalComponent";
+import { observable } from "mobx";
+
+const QRCode = require('qrcode-react');
 
 @observer
 export class Header extends React.Component {
-
+  @observable showModal: boolean = false;
+  
   loginStore = new Login();
   
   componentDidMount() {
     this.loginStore.getToken();
   }
 
+  toggle = () => {
+    this.showModal = !this.showModal;
+  }
 
   render() {
     return (
       <div className="header d-flex justify-content-between align-items-center">
-        <div>
+        <div className="d-flex align-items-center">
           <img src={Logo} className="logo img-fuid" />
+          <h3 className="title">Sonikro Shields</h3>
         </div>
 
         <Nav>
@@ -35,8 +44,22 @@ export class Header extends React.Component {
           </div>
 
           <div className="separator"/>
+
+          <ModalComponent 
+            toggle={this.toggle} 
+            showModal={this.showModal} 
+            modalTitle="QR Code para login via App"
+            modalBody={
+              this.loginStore.token ? (
+                <QRCode 
+                  value={this.loginStore.token}
+                  size={250}
+                />
+              ) : <h4>Sem token</h4>
+            }
+          />
           
-          <NavItem>
+          <NavItem className="mr-2">
             {this.loginStore.userData ? (
               <div className="d-flex align-items-center">
                 <UserProfile avatar={this.loginStore.userData.avatar.medium} username={this.loginStore.userData.username} />
@@ -47,6 +70,10 @@ export class Header extends React.Component {
                 Steam Login
               </NavLink>
             )}
+          </NavItem>
+
+          <NavItem>
+            <Button color="info" onClick={this.toggle}>QR Code</Button>
           </NavItem>
         </Nav>
       </div>

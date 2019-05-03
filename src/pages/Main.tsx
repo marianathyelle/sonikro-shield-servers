@@ -5,6 +5,7 @@ export class Main extends React.Component {
   render() {
     return (
       <div className="table-responsive">
+        <h1 className="main-title">Servers</h1>
         <Table>
           <thead>
             <tr>
