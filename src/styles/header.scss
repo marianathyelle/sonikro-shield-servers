@@ -22,7 +22,28 @@
   height: 60px;
 }
 
-.steam-btn {
+.login-btn {
   background-color: #5C7E10 !important;
   color: white !important;
+  border-radius: 5px;
+}
+
+.separator {
+  border: 1px solid white;
+  margin-right: 15px
+}
+
+.user-profile {
+
+  img {
+    border-radius: 25px;
+    margin-right: 5px;
+    width: 50px;
+  }
+
+  span {
+    color: white;
+  }
+
+  margin-right: 15px;
 }
