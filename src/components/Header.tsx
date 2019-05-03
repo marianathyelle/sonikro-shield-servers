@@ -55,7 +55,7 @@ export class Header extends React.Component {
                   value={this.loginStore.token}
                   size={250}
                 />
-              ) : <h4>Sem token</h4>
+              ) : <h4>Você não está logado.</h4>
             }
           />
           

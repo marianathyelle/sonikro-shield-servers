@@ -1,11 +1,20 @@
 import * as React from "react";
 import { Table, Button } from "reactstrap";
+import { Servers } from "../stores/Servers";
+import { observer } from "mobx-react";
 
+@observer
 export class Main extends React.Component {
+  servers = new Servers();
+
+  
   render() {
     return (
       <div className="table-responsive">
-        <h1 className="main-title">Servers</h1>
+        <div className="text-center mb-5">
+          <h1 className="main-title">Servers</h1>
+          <h5>These are the servers available under the protection of Sonikro Shield</h5>
+        </div>
         <Table>
           <thead>
             <tr>
@@ -19,39 +28,19 @@ export class Main extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Server one</td>
-              <td>0</td>
-              <td>12/15</td>
-              <td>""</td>
-              <td>Open</td>
-              <td>
-                <Button>Enable</Button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Server one</td>
-              <td>0</td>
-              <td>12/15</td>
-              <td>""</td>
-              <td>Open</td>
-              <td>
-                <Button>Enable</Button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Server one</td>
-              <td>0</td>
-              <td>12/15</td>
-              <td>""</td>
-              <td>Open</td>
-              <td>
-                <Button>Enable</Button>
-              </td>
-            </tr>
+              {this.servers.servers && this.servers.servers.map(item => (
+                <tr key={item.serverId}>
+                  <td>{item.serverId}</td>
+                  <td>{item.hostname}</td>
+                  <td>{item.ipPort}</td>
+                  <td>{item.players}</td>
+                  <td>{item.map}</td>
+                  <td>{item.status}</td>
+                  <td>
+                    <Button>Enable</Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </div>
