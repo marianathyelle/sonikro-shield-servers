@@ -1,5 +1,4 @@
 import { observable } from 'mobx';
-import { API_URL } from "../services";
 
 const queryString = require('query-string');
 const store = require('store');
@@ -25,9 +24,9 @@ export interface User {
   exp:      number;
 }
 
-export class Login {
+export class User {
   @observable userData?: User;
-  @observable token: string = "";
+  @observable token: string = store.get('token');
 
   public getToken() {
     let urlParams: TokenParam;

@@ -3,21 +3,29 @@ import Logo from "../assets/logo.png";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
 import { UserProfile } from "./UserProfile";
 import { API_URL } from "../services";
-import { observer } from "mobx-react";
-import { Login } from "../stores/Login";
+import { observer, inject } from "mobx-react";
+import { User } from "../stores/User";
 import { ModalComponent } from "../components/ModalComponent";
 import { observable } from "mobx";
 
 const QRCode = require('qrcode-react');
 
+interface InjectedProps {
+  user: User;
+}
+
+
+@inject("user")
 @observer
 export class Header extends React.Component {
   @observable showModal: boolean = false;
   
-  loginStore = new Login();
+  get injected() {
+    return this.props as InjectedProps;
+  }
   
   componentDidMount() {
-    this.loginStore.getToken();
+    this.injected.user.getToken();
   }
 
   toggle = () => {
@@ -50,20 +58,18 @@ export class Header extends React.Component {
             showModal={this.showModal} 
             modalTitle="QR Code para login via App"
             modalBody={
-              this.loginStore.token ? (
-                <QRCode 
-                  value={this.loginStore.token}
-                  size={250}
-                />
-              ) : <h4>Você não está logado.</h4>
+              <QRCode 
+                value={this.injected.user.token}
+                size={250}
+              />
             }
           />
           
           <NavItem className="mr-2">
-            {this.loginStore.userData ? (
+            {this.injected.user.userData ? (
               <div className="d-flex align-items-center">
-                <UserProfile avatar={this.loginStore.userData.avatar.medium} username={this.loginStore.userData.username} />
-                <Button onClick={this.loginStore.logout} color="danger">Logout</Button>
+                <UserProfile avatar={this.injected.user.userData.avatar.medium} username={this.injected.user.userData.username} />
+                <Button onClick={this.injected.user.logout} color="danger">Logout</Button>
               </div>
             ) : (
               <NavLink href={`${API_URL}/auth/authenticate`} className="login-btn">
@@ -72,9 +78,11 @@ export class Header extends React.Component {
             )}
           </NavItem>
 
-          <NavItem>
-            <Button color="info" onClick={this.toggle}>QR Code</Button>
-          </NavItem>
+          {this.injected.user.token && (
+            <NavItem>
+              <Button color="info" onClick={this.toggle}>QR Code</Button>
+            </NavItem>
+          )}
         </Nav>
       </div>
     )
